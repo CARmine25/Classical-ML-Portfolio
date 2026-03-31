@@ -64,7 +64,21 @@ def missing_value(column_name):
 
 
 result=missing_value("total_bedrooms")
-print(result)
+#print(result)
 
+
+import numpy as np
+
+# Separate target before building X
+y = np.array(data["median_house_value"])
+
+# Remove target from data so X has only features
+del data["median_house_value"]
+
+# Build X: shape (n_rows, n_features)
+X = np.array(list(data.values())).T
+
+print(X.shape)  # should be (20640, 8)
+print(y.shape)  # should be (20640,)
 
 
