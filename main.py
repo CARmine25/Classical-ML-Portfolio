@@ -56,11 +56,11 @@ def missing_value(column_name):
     for column in data:
         data[column] = [float(x) for x in data[column]]   
     print(data["total_bedrooms"][:5])
-#    return{
-#        "non_missing_values": values,
-#        "count of missing_values" : count_empty,
-#        "count of non_empty" : count_number
-#    }
+    return{
+        "non_missing_values": values,
+        "count of missing_values" : count_empty,
+        "count of non_empty" : count_number
+    }
 
 
 result=missing_value("total_bedrooms")
@@ -76,9 +76,25 @@ y = np.array(data["median_house_value"])
 del data["median_house_value"]
 
 # Build X: shape (n_rows, n_features)
+
 X = np.array(list(data.values())).T
 
-print(X.shape)  # should be (20640, 8)
-print(y.shape)  # should be (20640,)
+#print(X.shape)  # should be (20640, 8)
+#print(y.shape)  # should be (20640,)
+
+#Compute the mean and standard deviation of each feature column using NumPy. Apply **standardization** (z-score scaling):
+#x_scaled = (x - mean) / std
+#Store the mean and std vectors — you'll need them to interpret predictions later.
 
 
+def standardise (X):
+    
+    mean=np.mean(X,axis=0)
+    std=np.std(X,axis=0)
+    
+    X_scaled= (X-mean)/std
+
+    return mean,std,X_scaled
+
+result=standardise(X)
+print("result :",result)
