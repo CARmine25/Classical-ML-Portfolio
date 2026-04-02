@@ -96,5 +96,20 @@ def standardise (X):
 
     return mean,std,X_scaled
 
-result=standardise(X)
-print("result :",result)
+mean, std, X_scaled = standardise(X)
+#print("result :",result)
+
+bias=np.ones((20640,1))
+x_biased=np.hstack([bias,X_scaled])
+#print(x_biased.shape)
+w = np.zeros(9)
+
+n_epochs=1000
+for epoch in range(n_epochs):  #n_epochs : It's just the number of times you want to loop through the entire dataset. A common starting value is 1000.
+    y_pred=x_biased @ w
+    error=y_pred-y
+    gradient=(x_biased.T @ error)/len(y)
+    w=w-0.001 * gradient
+    loss= np.mean((y-y_pred)**2)
+    if epoch % 100 == 0:
+        print(f"Epoch {epoch} loss: {loss}")
